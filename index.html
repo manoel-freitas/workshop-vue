@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Workshop Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0/dist/vue.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="nav-bar"></div>
+
+    <div id="app">
+      <div class="puppy">
+        
+        <div class="puppy-image">
+          <img src="puppy-1.jpg" />
+        </div>
+  
+        <div class="puppy-info">
+            <h1>Adoravel cãozinho</h1>
+            <p>Adote-o agora</p>
+            <p>Entrega: Sim</p>
+  
+            <ul>
+              <li>5 meses</li>
+              <li>Raça A</li>
+              <li>Super brincalhão</li>
+            </ul>
+  
+            
+            <div class="puppy-box" style="background-color: #75584a">
+            </div> 
+            <div class="puppy-box" style="background-color: #ffffff">
+            </div> 
+  
+            <button>
+            Adote
+            </button>
+  
+            
+          </div>  
+              <div class="cart">
+                <p>Você adotou: </p>
+              </div>
+      
+      </div>
+    </div> 
+    
+     
+
+    <script>
+    const app = new Vue({
+      el: '#app',
+
+    })
+    </script>
+</body>
+</html>
