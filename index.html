@@ -12,49 +12,128 @@
     <div class="nav-bar"></div>
 
     <div id="app">
-      <div class="puppy">
-        
-        <div class="puppy-image">
-          <img src="puppy-1.jpg" />
-        </div>
-  
-        <div class="puppy-info">
-            <h1>Adoravel cãozinho</h1>
-            <p>Adote-o agora</p>
-            <p>Entrega: Sim</p>
-  
-            <ul>
-              <li>5 meses</li>
-              <li>Raça A</li>
-              <li>Super brincalhão</li>
-            </ul>
-  
-            
-            <div class="puppy-box" style="background-color: #75584a">
-            </div> 
-            <div class="puppy-box" style="background-color: #ffffff">
-            </div> 
-  
-            <button>
-            Adote
-            </button>
-  
-            
-          </div>  
-              <div class="cart">
-                <p>Você adotou: </p>
-              </div>
-      
-      </div>
+        <puppy :premium="!premium"></puppy>
     </div> 
-    
-     
 
     <script>
-    const app = new Vue({
-      el: '#app',
+      Vue.component('puppy-details', {
+        props: {
+          details: {
+            type: Array,
+            required: true,
+          }
+        },
+        template: `
+            <ul>
+              <li v-for="(detail, index) in details" :key="index">{{detail}}</li>
+            </ul>
+        `
+      })
+      Vue.component('puppy', {
+        props: {
+          premium: {
+            type: Boolean,
+            required: false,
+            default: false
+          }
+        },
+        template: `
+        <div class="puppy">
 
-    })
+          <div class="puppy-image">
+            <img :src="image" />
+          </div>
+    
+          
+          <div class="puppy-info">
+              <h1>{{ title }}</h1>
+              <p v-if="inStock">Adote-o agora </p>
+              <p v-else> Não pode adotar :(</p> 
+              <p>Entrega: {{ shipping }}</p>
+    
+              
+              <puppy-details :details="detailSelectPuppy" />
+              
+              
+              <div class="puppy-box"
+                  v-for="(puppy, index) in puppies" 
+                  :key="puppy.puppyId"
+                  :style="{ backgroundColor: puppy.puppyColor }"
+                  @mouseover="updatePuppy(index)"
+                  >
+              </div> 
+    
+              <button  :class="{'disabledButton': !inStock}" :disabled="!inStock" @click="updateCart">
+              Adote Agora
+              </button>
+            </div>  
+            <div class="cart">
+              <p>Você adotou: {{cart}}</p>
+            </div>
+        </div>
+        </div>
+        `,
+        computed: {
+          title() {
+            return this.brand +' '+ this.puppy
+          },
+          inStock(){
+            return this.puppies[this.selectedPuppy].puppyQuantity > 0
+          },
+          shipping() {
+            console.log(this.premium)
+            if (this.premium) {
+              return "Sim"
+            }
+            return "Venha buscar por favor"
+          },
+          image(){
+            return this.puppies[this.selectedPuppy].puppyImage
+          },
+          detailSelectPuppy() {
+            return this.puppies[this.selectedPuppy].puppyDetails
+          }
+        },
+        data() {
+          return {
+            brand: 'Accenture',
+            puppy: 'Cãozinho adorável',
+            selectedPuppy: 0,
+            
+            puppies: [
+              {
+                puppyId: 2234,
+                puppyImage:  'puppy-1.jpg',
+                puppyColor: 'brown',
+                puppyQuantity: 10,
+                puppyDetails: ['2 meses', 'Raça A', 'Super brincalhão'],
+              },
+              {
+                puppyId: 2235,
+                puppyColor: 'white',
+                puppyImage:  'puppy-2.jpg',
+                puppyQuantity: 0,
+                puppyDetails: ['5 meses', 'Raça B', 'Super Fofo'],    
+              }
+            ],
+            cart: 0
+          }
+        },
+        methods: {
+          updatePuppy(index) {
+            this.selectedPuppy = index
+          },
+          updateCart() {
+            this.cart += 1
+          }
+        },
+      })
+      const app = new Vue({
+        el: '#app',
+        data: {
+          premium: true
+        }
+      })
     </script>
 </body>
 </html>
