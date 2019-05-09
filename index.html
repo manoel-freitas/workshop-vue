@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Workshop Vue</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0/dist/vue.js"></script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="nav-bar"></div>
 
     <div id="app">
-        <puppy :premium="!premium"></puppy>
-    </div> 
+      <puppy :premium="!premium"></puppy>
+    </div>
 
     <script>
-      Vue.component('puppy-details', {
+      Vue.component("puppy-details", {
         props: {
           details: {
             type: Array,
-            required: true,
+            required: true
           }
         },
         template: `
@@ -28,8 +28,8 @@
               <li v-for="(detail, index) in details" :key="index">{{detail}}</li>
             </ul>
         `
-      })
-      Vue.component('puppy', {
+      });
+      Vue.component("puppy", {
         props: {
           premium: {
             type: Boolean,
@@ -75,65 +75,65 @@
         `,
         computed: {
           title() {
-            return this.brand +' '+ this.puppy
+            return this.brand + " " + this.puppy;
           },
-          inStock(){
-            return this.puppies[this.selectedPuppy].puppyQuantity > 0
+          inStock() {
+            return this.puppies[this.selectedPuppy].puppyQuantity > 0;
           },
           shipping() {
-            console.log(this.premium)
+            console.log(this.premium);
             if (this.premium) {
-              return "Sim"
+              return "Sim";
             }
-            return "Venha buscar por favor"
+            return "Venha buscar por favor";
           },
-          image(){
-            return this.puppies[this.selectedPuppy].puppyImage
+          image() {
+            return this.puppies[this.selectedPuppy].puppyImage;
           },
           detailSelectPuppy() {
-            return this.puppies[this.selectedPuppy].puppyDetails
+            return this.puppies[this.selectedPuppy].puppyDetails;
           }
         },
         data() {
           return {
-            brand: 'Accenture',
-            puppy: 'Cãozinho adorável',
+            brand: "Nerdzão",
+            puppy: "Cãozinho adorável",
             selectedPuppy: 0,
-            
+
             puppies: [
               {
                 puppyId: 2234,
-                puppyImage:  'puppy-1.jpg',
-                puppyColor: 'brown',
+                puppyImage: "puppy-1.jpg",
+                puppyColor: "brown",
                 puppyQuantity: 10,
-                puppyDetails: ['2 meses', 'Raça A', 'Super brincalhão'],
+                puppyDetails: ["2 meses", "Raça A", "Super brincalhão"]
               },
               {
                 puppyId: 2235,
-                puppyColor: 'white',
-                puppyImage:  'puppy-2.jpg',
+                puppyColor: "white",
+                puppyImage: "puppy-2.jpg",
                 puppyQuantity: 0,
-                puppyDetails: ['5 meses', 'Raça B', 'Super Fofo'],    
+                puppyDetails: ["5 meses", "Raça B", "Super Fofo"]
               }
             ],
             cart: 0
-          }
+          };
         },
         methods: {
           updatePuppy(index) {
-            this.selectedPuppy = index
+            this.selectedPuppy = index;
           },
           updateCart() {
-            this.cart += 1
+            this.cart += 1;
           }
-        },
-      })
+        }
+      });
       const app = new Vue({
-        el: '#app',
+        el: "#app",
         data: {
           premium: true
         }
-      })
+      });
     </script>
-</body>
+  </body>
 </html>
